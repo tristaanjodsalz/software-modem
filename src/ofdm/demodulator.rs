@@ -18,7 +18,7 @@ pub struct OFDMDemodulator {
 }
 
 impl OFDMDemodulator {
-    /// Creates a new OFDM modulator with the given [configuration](OFDMModulatorConfig).
+    /// Creates a new OFDM modulator with the given [configuration](OFDMDemodulatorConfig).
     pub fn new(config: OFDMDemodulatorConfig) -> Self {
         let qam_modem = QAMModem::new(config.qam_order);
 

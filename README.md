@@ -40,6 +40,7 @@ data_buffer[..test_data.len()].copy_from_slice(test_data.as_bytes());
 let mut modulated_symbol = vec![0.0; ofdm_modulator.get_symbol_length()];
 
 ofdm_modulator.modulate_buffer_as_symbol(&data_buffer, &mut modulated_symbol);
+println!("Modulated Symbol: {:?}", &modulated_symbol[..8]); // print first 8 samples
 
 
 let ofdm_demodulator = OFDMDemodulator::new(OFDMDemodulatorConfig {
@@ -58,4 +59,12 @@ demodulated_buffer.retain(|&x| x != 0);
 
 let demodulated_data = String::from_utf8(demodulated_buffer).unwrap();
 assert_eq!(demodulated_data, test_data);
+
+println!("Demodulated Data: {}", demodulated_data);
+```
+
+The example above is also available in the `examples` folder; you can run it with:
+
+```bash
+cargo run --example basic_ofdm
 ```
