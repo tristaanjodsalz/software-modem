@@ -95,12 +95,11 @@ impl OFDMDemodulator {
             .unwrap();
 
         // equalize
-        // for now, just scale everything to fit the range of QAM symbols
-        let max_value = output_buffer.iter().map(|c| c.norm()).fold(0.0, f32::max);
-        if max_value > 0.0 {
-            for value in output_buffer.iter_mut() {
-                *value /= max_value / 3.0;
-            }
+        // todo this just uses one pilot for all subcarriers
+        let eq_factor = output_buffer[4].to_polar().0;
+
+        for sample in output_buffer.iter_mut() {
+            *sample = sample.scale(1.0 / eq_factor);
         }
 
         // extract data subcarriers
